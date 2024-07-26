@@ -1,10 +1,11 @@
-abstract class TracingState {
-  const TracingState();
-}
 
- class TracingStateInitial extends TracingState{}
+abstract class TracingState {}
 
- class TracingAddPoints extends TracingState{}
+class TracingStateInitial extends TracingState{}
+
+class TracingAddPoints extends TracingState{}
 
 class TracingStateClearPoints extends TracingState{}
+
+class TracingStateChangeLetter extends TracingState{}
 

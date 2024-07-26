@@ -13,7 +13,7 @@ class TracingPainter extends CustomPainter {
     final outlinePaint = Paint()
       ..color = Colors.grey
       ..style = PaintingStyle.stroke
-      ..strokeWidth = 20.0;
+      ..strokeWidth = 30.0;
 
     Path path = LetterPaths.getPathForLetter(letter);
     final matrix = Matrix4.identity()

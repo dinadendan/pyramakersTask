@@ -9,26 +9,51 @@ class TracingScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<TracingCubit,TracingState>(
-      builder:(context,state){
-        final cubit = context.read<TracingCubit>();
-        return Scaffold(
-          appBar: AppBar(
-            title: const Text('Alphabet Tracing'),
-            actions: [
-              IconButton(
-                icon: const Icon(Icons.clear),
-                onPressed: () {
-                  cubit.clearPoints();
+    return DefaultTabController(
+      length: 2,
+      child: BlocBuilder<TracingCubit, TracingState>(
+        builder: (context, state) {
+          final cubit = context.read<TracingCubit>();
+          return Scaffold(
+            appBar: AppBar(
+              title: const Text('Alphabet Tracing'),
+              bottom: TabBar(
+                onTap: (index) {
+                  if (index == 0) {
+                    cubit.changeLetter('M');
+                  } else if (index == 1) {
+                    cubit.changeLetter('A');
+                  }
                 },
+                tabs: const [
+                  Tab(text: 'Letter M'),
+                  Tab(text: 'Letter A'),
+                ],
               ),
-            ],
-          ),
-          body: const Center(
-            child: TracingCanvas(letter: 'A'),
-          ),
-        );
-      }
+              actions: [
+                IconButton(
+                  icon: const Icon(Icons.clear),
+                  onPressed: () {
+                    cubit.clearPoints();
+                  },
+                ),
+              ],
+            ),
+            body: const TabBarView(
+              physics: NeverScrollableScrollPhysics(),
+
+              children: [
+                Center(
+                  child: TracingCanvas(letter: 'M'),
+                ),
+                Center(
+                  child: TracingCanvas(letter: 'A'),
+                ),
+              ],
+            ),
+          );
+        },
+      ),
     );
   }
 }

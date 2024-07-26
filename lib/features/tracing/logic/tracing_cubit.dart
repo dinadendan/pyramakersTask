@@ -7,6 +7,8 @@ class TracingCubit extends Cubit<TracingState> {
   TracingCubit() : super(TracingStateInitial());
 
   List<Offset?> _points = [];
+  String letter  = 'M';
+
 
   List<Offset?> get points => _points;
 
@@ -18,6 +20,12 @@ class TracingCubit extends Cubit<TracingState> {
   void clearPoints() {
     _points = [];
     emit(TracingStateClearPoints());
+  }
+
+  void changeLetter(String newLetter) {
+    letter = newLetter;
+    _points = [];
+    emit(TracingStateChangeLetter());
   }
 
 }
