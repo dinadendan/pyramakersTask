@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:pyramakers_task/features/tracing/tracing_model.dart';
-import 'package:pyramakers_task/features/tracing/tracing_screen.dart';
+import 'package:pyramakers_task/features/tracing/logic/tracing_cubit.dart';
+import 'package:pyramakers_task/features/tracing/ui/tracing_screen.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 
 
@@ -14,8 +14,8 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => TracingModel(),
+    return BlocProvider(
+      create: (context) => TracingCubit(),
       child: const MaterialApp(
         debugShowCheckedModeBanner: false,
         home: TracingScreen(),

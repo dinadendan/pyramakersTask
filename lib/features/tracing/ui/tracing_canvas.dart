@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:pyramakers_task/features/core/constant/letter_clipper.dart';
-import 'package:pyramakers_task/features/tracing/tracing_model.dart';
-import 'package:pyramakers_task/features/tracing/tracing_painter.dart';
+import 'package:pyramakers_task/features/tracing/logic/tracing_cubit.dart';
+import 'package:pyramakers_task/features/tracing/logic/tracing_states.dart';
+import 'package:pyramakers_task/features/tracing/ui/tracing_painter.dart';
 import 'package:pyramakers_task/features/core/constant/letter_paths.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 
 class TracingCanvas extends StatelessWidget {
@@ -13,23 +14,24 @@ class TracingCanvas extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<TracingModel>(
-      builder: (context, model, child) {
+    return BlocBuilder<TracingCubit,TracingState>(
+      builder: (context,state) {
+        final cubit = context.read<TracingCubit>();
         return ClipPath(
           clipper: LetterClipper(letter),
           child: GestureDetector(
             onPanUpdate: (details) {
               Offset localPosition = details.localPosition;
               if (_isWithinLetterOutline(localPosition)) {
-                model.addPoint(localPosition);
+                cubit.addPoint(localPosition);
               }
             },
             onPanEnd: (details) {
-              model.addPoint(null);
+              cubit.addPoint(null);
             },
             child: CustomPaint(
               size: const Size(300, 300),
-              painter: TracingPainter(model.points, letter),
+              painter: TracingPainter(cubit.points, letter),
               child: Container(),
             ),
           ),
